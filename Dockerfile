@@ -12,7 +12,7 @@ FROM build_base as builder
 COPY main.go .
 COPY controllers ./controllers
 COPY core ./core
-#COPY routers ./routers
+COPY signing ./signing
 
 RUN CGO_ENABLED="0" go build
 

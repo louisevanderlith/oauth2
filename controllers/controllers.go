@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"crypto/x509"
 	"github.com/louisevanderlith/oauth2/core"
+	"github.com/louisevanderlith/oauth2/signing"
 	"log"
 	"net/http"
 
@@ -16,52 +18,44 @@ import (
 
 var _server *server.Server
 
-//init initializes the Identity Server
-func init() {
-	_server = setupOAuthServer()
-}
-
-func setupOAuthServer() *server.Server {
+func InitOAuthServer(certPath string) {
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
 
 	// token store
 	manager.MustTokenStorage(store.NewMemoryTokenStore())
 
-	// generate jwt access token
-	manager.MapAccessGenerate(generates.NewJWTAccessGenerate([]byte("00000000"), jwt.SigningMethodHS512))
+	err := signing.Initialize(certPath)
 
-	/*clientStore := store.NewClientStore()
-	clientStore.Set("222222", &models.Client{
-		ID:     "222222",
-		Secret: "22222222",
-		Domain: "http://localhost:9094",
-	})*/
+	if err != nil {
+		panic(err)
+	}
+
+	// generate jwt access token
+	manager.MapAccessGenerate(generates.NewJWTAccessGenerate(x509.MarshalPKCS1PrivateKey(signing.PrivateKey), jwt.SigningMethodHS512))
 
 	manager.MapClientStorage(core.NewClientStore())
 
-	srv := server.NewServer(server.NewConfig(), manager)
+	_server = server.NewServer(server.NewConfig(), manager)
 
-	srv.SetPasswordAuthorizationHandler(core.Login)
+	_server.SetPasswordAuthorizationHandler(core.Login)
 
-	srv.SetUserAuthorizationHandler(userAuthorizeHandler)
+	_server.SetUserAuthorizationHandler(userAuthorizeHandler)
 
-	srv.SetInternalErrorHandler(func(err error) (re *errors.Response) {
+	_server.SetInternalErrorHandler(func(err error) (re *errors.Response) {
 		log.Println("Internal Error:", err.Error())
 		return
 	})
 
-	srv.SetResponseErrorHandler(func(re *errors.Response) {
+	_server.SetResponseErrorHandler(func(re *errors.Response) {
 		log.Println("Response Error:", re.Error.Error())
 	})
-
-	return srv
 }
 
-func userAuthorizeHandler(w http.ResponseWriter, r *http.Request) (userID string, err error) {
+func userAuthorizeHandler(w http.ResponseWriter, r *http.Request) (string, error) {
 	store, err := session.Start(nil, w, r)
 	if err != nil {
-		return
+		return "", err
 	}
 
 	uid, ok := store.Get("LoggedInUserID")
@@ -75,16 +69,16 @@ func userAuthorizeHandler(w http.ResponseWriter, r *http.Request) (userID string
 
 		w.Header().Set("Location", "/login")
 		w.WriteHeader(http.StatusFound)
-		return
+		return "", nil
 	}
 
-	userID = uid.(string)
+	userID := uid.(string)
 	store.Delete("LoggedInUserID")
 	err = store.Save()
 
-	if err != nil{
+	if err != nil {
 		return "", err
 	}
 
-	return
+	return userID, nil
 }

@@ -10,6 +10,8 @@ func main() {
 	core.CreateContext()
 	defer core.Shutdown()
 
+	certPath := "/signcerts/"
+	controllers.InitOAuthServer(certPath)
 	r := gin.Default()
 
 	r.GET("/auth", controllers.Auth)
