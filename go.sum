@@ -64,6 +64,8 @@ github.com/louisevanderlith/droxolite v1.5.9/go.mod h1:4MGmNynabJT1TDKQO0lGxMv9T
 github.com/louisevanderlith/husk v0.6.25/go.mod h1:FiREVNZW48kA++iCekTEqFLcpe1m31+FQhd1ePm0YLA=
 github.com/louisevanderlith/husk v0.6.29 h1:zUei8C9eRoTvxewv25xsMLm3PdKJYg54ZjTemT18gdw=
 github.com/louisevanderlith/husk v0.6.29/go.mod h1:pGAPhpNC+raC0SvX2nR2+mDLUrmIJ+iyP6yt7SFQR+M=
+github.com/louisevanderlith/husk v1.0.0 h1:iVuVHqF2mLtgI88NJBKbA1tUdOi/plXsRlFZIWYrUTs=
+github.com/louisevanderlith/husk v1.0.0/go.mod h1:iEFeOL3LmBuXlHl3lhiq8yDfob2CNbv+p23ZjP5DORU=
 github.com/louisevanderlith/secure v1.1.0 h1:TSkkjvR5h++txyhFJHzUFWEfIShQf2HuOBHarmJ43Uo=
 github.com/louisevanderlith/secure v1.1.0/go.mod h1:DEn+RqtUILRZkANrhV7L1+9sU+Ido19GqkLnQ/V2A5U=
 github.com/mattn/go-colorable v0.1.4 h1:snbPLB8fVfU9iwbbo30TPtbLRzwWu6aJS6Xh4eaaviA=

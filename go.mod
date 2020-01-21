@@ -1,6 +1,6 @@
 module github.com/louisevanderlith/oauth2
 
-go 1.12
+go 1.13
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -10,7 +10,7 @@ require (
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
-	github.com/louisevanderlith/husk v0.6.29
+	github.com/louisevanderlith/husk v1.0.0
 	github.com/louisevanderlith/secure v1.1.0
 	github.com/mattn/go-isatty v0.0.11 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

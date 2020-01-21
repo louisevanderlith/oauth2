@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:html';
+
 import 'package:mango_ui/bodies/login.dart';
+import 'package:mango_ui/formstate.dart';
 import 'package:mango_ui/services/secureapi.dart';
 
-import 'package:mango_ui/formstate.dart';
 import 'app.dart';
 
 class LoginForm extends FormState {

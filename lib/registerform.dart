@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
-import 'app.dart';
+
+import 'package:mango_ui/bodies/register.dart';
 import 'package:mango_ui/formstate.dart';
 import 'package:mango_ui/pathlookup.dart';
-import 'package:mango_ui/bodies/register.dart';
 import 'package:mango_ui/services/secureapi.dart';
+
+import 'app.dart';
 
 class RegisterForm extends FormState {
   TextInputElement _name;
