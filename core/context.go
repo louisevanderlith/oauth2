@@ -1,10 +1,13 @@
 package core
 
-import "github.com/louisevanderlith/husk"
+import (
+	"github.com/louisevanderlith/husk"
+	"github.com/louisevanderlith/husk/serials"
+)
 
 type context struct {
-	Clients husk.Tabler
-	Users husk.Tabler
+	Clients   husk.Tabler
+	Users     husk.Tabler
 	Forgotten husk.Tabler
 }
 
@@ -12,9 +15,9 @@ var ctx context
 
 func CreateContext() {
 	ctx = context{
-		Clients: husk.NewTable(Client{}),
-		Users: husk.NewTable(User{}),
-		Forgotten: husk.NewTable(Forgot{}),
+		Clients:   husk.NewTable(Client{}, serials.GobSerial{}),
+		Users:     husk.NewTable(User{}, serials.GobSerial{}),
+		Forgotten: husk.NewTable(Forgot{}, serials.GobSerial{}),
 	}
 
 	seed()

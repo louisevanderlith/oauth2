@@ -6,6 +6,7 @@ import (
 )
 
 func Token(c *gin.Context) {
+
 	err := _server.HandleTokenRequest(c.Writer, c.Request)
 
 	if err != nil {

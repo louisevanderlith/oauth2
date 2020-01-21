@@ -21,7 +21,7 @@ var _server *server.Server
 func InitOAuthServer(certPath string) {
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-
+	manager.SetClientTokenCfg(manage.DefaultClientTokenCfg)
 	// token store
 	manager.MustTokenStorage(store.NewMemoryTokenStore())
 
@@ -35,11 +35,11 @@ func InitOAuthServer(certPath string) {
 	manager.MapAccessGenerate(generates.NewJWTAccessGenerate(x509.MarshalPKCS1PrivateKey(signing.PrivateKey), jwt.SigningMethodHS512))
 
 	manager.MapClientStorage(core.NewClientStore())
-
 	_server = server.NewServer(server.NewConfig(), manager)
-
+	_server.SetAllowGetAccessRequest(true)
+	_server.SetClientInfoHandler(server.ClientFormHandler)
 	_server.SetPasswordAuthorizationHandler(core.Login)
-
+	//_server.ValidationBearerToken()
 	_server.SetUserAuthorizationHandler(userAuthorizeHandler)
 
 	_server.SetInternalErrorHandler(func(err error) (re *errors.Response) {

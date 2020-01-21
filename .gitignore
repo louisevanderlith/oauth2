@@ -12,3 +12,5 @@
 *.out
 
 oauth2
+db/*.husk
+!db/*.seed.json

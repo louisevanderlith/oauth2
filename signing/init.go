@@ -7,6 +7,7 @@ import (
 	"encoding/pem"
 	"errors"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -36,9 +37,14 @@ func Initialize(path string) error {
 func loadPrivateKey(path string) (*rsa.PrivateKey, error) {
 	privPath := path + privateKeyFilename
 	pubPath := path + publicKeyFilename
-
-	if _, err := os.Stat(privPath); os.IsNotExist(err) {
+	_, err := os.Stat(privPath)
+	if os.IsNotExist(err) {
 		return generateKeyPair(path)
+	}
+
+	if err != nil {
+		log.Println(err)
+		return nil, err
 	}
 
 	privDer, err := ioutil.ReadFile(privPath)

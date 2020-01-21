@@ -1,6 +1,7 @@
 package core
 
 import (
+	"github.com/louisevanderlith/husk"
 	"gopkg.in/oauth2.v3"
 )
 
@@ -8,6 +9,10 @@ type Clients struct{}
 
 func NewClientStore() oauth2.ClientStore {
 	return &Clients{}
+}
+
+func GetAllClients() husk.Collection {
+	return ctx.Clients.Find(1, 10, husk.Everything())
 }
 
 func (cs *Clients) GetByID(id string) (oauth2.ClientInfo, error) {

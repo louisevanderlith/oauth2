@@ -19,6 +19,8 @@ func main() {
 	r.GET("/login", controllers.Login)
 	r.POST("/login", controllers.LoginPost)
 	r.POST("/token", controllers.Token)
+	r.GET("/clients", controllers.Clients)
+	r.POST("/info", controllers.Info	)
 
 	err := r.Run(":8086")
 

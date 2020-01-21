@@ -1,4 +1,4 @@
-FROM golang:1.12 as build_base
+FROM golang:1.13 as build_base
 
 WORKDIR /box
 
@@ -37,6 +37,7 @@ COPY --from=pyltjie /arrow/build/*.dart.js dist/js/
 COPY views views
 
 RUN mkdir -p /views/_shared
+RUN mkdir -p /signcerts/
 EXPOSE 8086
 
 ENTRYPOINT [ "./oauth2" ]
