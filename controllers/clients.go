@@ -7,6 +7,11 @@ import (
 )
 
 func Clients(c *gin.Context) {
-	result := core.GetAllClients()
+	result, err := core.GetAllClients()
+
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
 	c.JSON(http.StatusOK, result)
 }

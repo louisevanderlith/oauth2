@@ -11,7 +11,7 @@ func NewClientStore() oauth2.ClientStore {
 	return &Clients{}
 }
 
-func GetAllClients() husk.Collection {
+func GetAllClients() (husk.Collection, error) {
 	return ctx.Clients.Find(1, 10, husk.Everything())
 }
 

@@ -16,12 +16,18 @@ import (
 	"gopkg.in/oauth2.v3/store"
 )
 
-var _server *server.Server
+var (
+	_server *server.Server
+	_host string
+	_scopes []string
+)
 
-func InitOAuthServer(certPath string) {
+func InitOAuthServer(certPath string, host string) {
+	_host = host
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
 	manager.SetClientTokenCfg(manage.DefaultClientTokenCfg)
+
 	// token store
 	manager.MustTokenStorage(store.NewMemoryTokenStore())
 
@@ -33,13 +39,12 @@ func InitOAuthServer(certPath string) {
 
 	// generate jwt access token
 	manager.MapAccessGenerate(generates.NewJWTAccessGenerate(x509.MarshalPKCS1PrivateKey(signing.PrivateKey), jwt.SigningMethodHS512))
-
 	manager.MapClientStorage(core.NewClientStore())
+
 	_server = server.NewServer(server.NewConfig(), manager)
 	_server.SetAllowGetAccessRequest(true)
 	_server.SetClientInfoHandler(server.ClientFormHandler)
 	_server.SetPasswordAuthorizationHandler(core.Login)
-	//_server.ValidationBearerToken()
 	_server.SetUserAuthorizationHandler(userAuthorizeHandler)
 
 	_server.SetInternalErrorHandler(func(err error) (re *errors.Response) {
@@ -50,6 +55,18 @@ func InitOAuthServer(certPath string) {
 	_server.SetResponseErrorHandler(func(re *errors.Response) {
 		log.Println("Response Error:", re.Error.Error())
 	})
+
+	_scopes = []string{
+		"openid",
+		"offline_access",
+		"profile",
+		"artifact",
+		"comms",
+		"comment",
+		"blog",
+		"theme",
+		"vin",
+	}
 }
 
 func userAuthorizeHandler(w http.ResponseWriter, r *http.Request) (string, error) {

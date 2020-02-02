@@ -3,11 +3,12 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-session/session"
+	"github.com/louisevanderlith/droxo"
 	"net/http"
 )
 
 func Login(c *gin.Context) {
-	c.HTML(http.StatusOK, "login.html", nil)
+	c.HTML(http.StatusOK, "login.html", droxo.Wrap("Login", nil))
 }
 
 func LoginPost(c *gin.Context) {
@@ -15,6 +16,7 @@ func LoginPost(c *gin.Context) {
 
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
+		return
 	}
 
 	r := c.Request
@@ -22,6 +24,7 @@ func LoginPost(c *gin.Context) {
 	if r.Form == nil {
 		if err := r.ParseForm(); err != nil {
 			c.AbortWithError(http.StatusInternalServerError, err)
+			return
 		}
 	}
 

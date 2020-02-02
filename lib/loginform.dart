@@ -19,7 +19,7 @@ class LoginForm extends FormState {
     _password = querySelector(passwordElem);
     _error = querySelector("#frmError");
 
-    querySelector(submitBtn).onClick.listen(onSend);
+    //querySelector(submitBtn).onClick.listen(onSend);
   }
 
   String get email {

@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-session/session"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -10,7 +11,9 @@ import (
 func Authorize(c *gin.Context) {
 	store, err := session.Start(nil, c.Writer, c.Request)
 	if err != nil {
+		log.Println(err)
 		c.AbortWithError(http.StatusInternalServerError, err)
+		return
 	}
 
 	var form url.Values
@@ -26,8 +29,10 @@ func Authorize(c *gin.Context) {
 	err = _server.HandleAuthorizeRequest(c.Writer, c.Request)
 
 	if err != nil {
+		log.Println(err)
 		c.AbortWithError(http.StatusBadRequest, err)
+		return
 	}
 
-	c.JSON(http.StatusOK, nil)
+	c.Abort()
 }

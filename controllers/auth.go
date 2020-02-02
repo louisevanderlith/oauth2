@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-session/session"
+	"github.com/louisevanderlith/droxo"
 	"net/http"
 )
 
@@ -15,7 +16,8 @@ func Auth(c *gin.Context) {
 
 	if _, ok := store.Get("LoggedInUserID"); !ok {
 		c.Redirect(http.StatusFound, "/login")
+		return
 	}
 
-	c.JSON(http.StatusOK, nil)
+	c.HTML(http.StatusOK, "auth.html", droxo.Wrap("Auth", nil))
 }

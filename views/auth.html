@@ -1,0 +1,14 @@
+{{define "layout"}}
+
+    <div class="container has-text-centered">
+        <div class="column is-4 is-offset-4">
+            <h3 class="title has-text-grey">Authorize</h3>
+            <p class="subtitle has-text-grey">The client would like to perform actions on your behalf.</p>
+            <div class="box">
+                <form action="/authorize" method="POST" role="form">
+                    <button type="submit" class="button is-block is-success is-large is-fullwidth">Allow</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}

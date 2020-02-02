@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/louisevanderlith/secure/core/tracetype"
+	"github.com/louisevanderlith/oauth2/core/tracetype"
 
 	"github.com/louisevanderlith/husk"
 
@@ -46,14 +46,14 @@ func NewUser(name, email string) (*User, error) {
 	return result, nil
 }
 
-func GetUser(key husk.Key) (*User, error) {
+func GetUser(key husk.Key) (User, error) {
 	rec, err := ctx.Users.FindByKey(key)
 
 	if err != nil {
-		return nil, err
+		return User{}, err
 	}
 
-	return rec.Data().(*User), nil
+	return rec.Data().(User), nil
 }
 
 func (u *User) SecurePassword(plainPassword string) {
@@ -73,7 +73,7 @@ func UpdateRoles(key husk.Key, roles []Role) error {
 		return err
 	}
 
-	c := obj.Data().(*User)
+	c := obj.Data().(User)
 	c.Roles = roles
 
 	err = obj.Set(c)
@@ -110,10 +110,6 @@ func (u *User) RoleMap() map[string]roletype.Enum {
 
 	return result
 }*/
-
-func getUsers(page, size int) husk.Collection {
-	return ctx.Users.Find(page, size, husk.Everything())
-}
 
 func getUser(email string) (husk.Recorder, error) {
 	return ctx.Users.FindFirst(emailFilter(email))

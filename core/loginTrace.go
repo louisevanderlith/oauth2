@@ -2,7 +2,7 @@ package core
 
 import (
 	"github.com/louisevanderlith/husk"
-	"github.com/louisevanderlith/secure/core/tracetype"
+	"github.com/louisevanderlith/oauth2/core/tracetype"
 )
 
 type LoginTrace struct {

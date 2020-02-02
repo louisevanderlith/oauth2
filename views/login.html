@@ -1,26 +1,25 @@
+{{define "layout"}}
 <section class="hero">
     <div class="hero-body">
         <div class="container has-text-centered">
             <div class="column is-4 is-offset-4">
-                <h3 class="title has-text-grey">Login</h3>
-                <p class="subtitle has-text-grey">Please login to proceed.</p>
+                <h3 class="title has-text-grey">Please login to proceed.</h3>
                 <div class="box">
-                    <form id="frmLogin" role="form">
+                    <form id="frmLogin" action="/login" method="POST" role="form">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-large" id="txtIdentity" required minlength="3" type="email" placeholder="Email" autofocus="" autocorrect="off" autocapitalize="off">
+                                <input class="input is-large" name="username" required minlength="3" type="email" placeholder="Email" autofocus="" autocorrect="off" autocapitalize="off">
                                 <p class="help is-danger"></p>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="control">
-                                <input class="input is-large" id="txtPassword" required type="password" placeholder="Password" autocomplete="off" autocorrect="off" autocapitalize="off">
+                                <input class="input is-large" name="password" type="password" placeholder="Password" autocomplete="off" autocorrect="off" autocapitalize="off">
                                 <p class="help is-danger"></p>
                             </div>
                         </div>
-                        <button id="btnLogin" class="button is-block is-success is-large is-fullwidth">Login</button>
-                        <p id="frmError" class="help is-danger"></p>
+                        <button type="submit" class="button is-block is-success is-large is-fullwidth">Login</button>
                     </form>
                 </div>
                 <p class="has-text-grey">
@@ -31,3 +30,4 @@
         </div>
     </div>
 </section>
+{{end}}

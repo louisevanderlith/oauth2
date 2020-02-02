@@ -29,9 +29,14 @@ func createSafeUser(user husk.Recorder) SafeUser {
 	return result
 }
 
-func GetUsers(page, size int) []SafeUser {
+func GetUsers(page, size int) ([]SafeUser, error) {
 	var result []SafeUser
-	users := getUsers(page, size)
+	users, err := ctx.Users.Find(page, size, husk.Everything())
+
+	if err != nil {
+		return result, err
+	}
+
 	itor := users.GetEnumerator()
 
 	for itor.MoveNext() {
@@ -41,5 +46,5 @@ func GetUsers(page, size int) []SafeUser {
 		result = append(result, sfeUser)
 	}
 
-	return result
+	return result, nil
 }
