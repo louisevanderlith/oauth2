@@ -22,7 +22,7 @@ func (v Forgot) Valid() (bool, error) {
 //ResetRequest When users forget their passwords, we create a redeemable 'Reset Request' which can be used to reset their password.
 //returns the Request Link or an error
 func RequestReset(email, host string) (string, error) {
-	rec, err := getUser(email)
+	rec, err := authStore.Users.FindFirst(byEmail(email))
 
 	if err != nil {
 		return "", err
@@ -33,10 +33,16 @@ func RequestReset(email, host string) (string, error) {
 		Redeemed: false,
 	}
 
-	cset := ctx.Forgotten.Create(forget)
+	cset := authStore.Forgotten.Create(forget)
 
 	if cset.Error != nil {
 		return "", cset.Error
+	}
+
+	err = authStore.Forgotten.Save()
+
+	if err != nil {
+		return "", err
 	}
 
 	resetLink := fmt.Sprintf("%s/%s", host, cset.Record.GetKey())
@@ -45,7 +51,7 @@ func RequestReset(email, host string) (string, error) {
 }
 
 func ResetPassword(forgotKey husk.Key, password string) error {
-	rec, err := ctx.Forgotten.FindByKey(forgotKey)
+	rec, err := authStore.Forgotten.FindByKey(forgotKey)
 
 	if err != nil {
 		return err
@@ -73,8 +79,8 @@ func ResetPassword(forgotKey husk.Key, password string) error {
 	//Redeem the Forgot
 	forgetData.Redeemed = true
 
-	ctx.Users.Save()
-	ctx.Forgotten.Save()
+	authStore.Users.Save()
+	authStore.Forgotten.Save()
 
 	return nil
 }

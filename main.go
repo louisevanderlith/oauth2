@@ -50,13 +50,14 @@ func main() {
 
 	r.GET("/auth", controllers.Auth)
 	r.POST("/authorize", controllers.Authorize)
+	r.GET("/authorize", controllers.Authorize)
 	r.GET("/login", controllers.Login)
 	r.POST("/login", controllers.LoginPost)
 	r.POST("/token", controllers.Token)
 	r.GET("/clients", controllers.Clients)
 	r.POST("/info", controllers.Info	)
 	r.GET("/.well-known/openid-configuration", controllers.OpenIDConfig)
-	r.GET("/jwks", controllers.GetJWKs)
+	r.GET("/keys", controllers.GetJWKs)
 	err = r.Run(":8086")
 
 	if err != nil {

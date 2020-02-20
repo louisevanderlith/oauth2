@@ -47,7 +47,7 @@ func NewUser(name, email string) (*User, error) {
 }
 
 func GetUser(key husk.Key) (User, error) {
-	rec, err := ctx.Users.FindByKey(key)
+	rec, err := authStore.Users.FindByKey(key)
 
 	if err != nil {
 		return User{}, err
@@ -67,7 +67,7 @@ func (u *User) SecurePassword(plainPassword string) {
 }
 
 func UpdateRoles(key husk.Key, roles []Role) error {
-	obj, err := ctx.Users.FindByKey(key)
+	obj, err := authStore.Users.FindByKey(key)
 
 	if err != nil {
 		return err
@@ -82,8 +82,14 @@ func UpdateRoles(key husk.Key, roles []Role) error {
 		return err
 	}
 
-	defer ctx.Users.Save()
-	return ctx.Users.Update(obj)
+	err = authStore.Users.Update(obj)
+
+	if err != nil {
+		return err
+	}
+
+	return authStore.Users.Save()
+
 }
 
 /*
@@ -110,11 +116,3 @@ func (u *User) RoleMap() map[string]roletype.Enum {
 
 	return result
 }*/
-
-func getUser(email string) (husk.Recorder, error) {
-	return ctx.Users.FindFirst(emailFilter(email))
-}
-
-func emailExists(email string) bool {
-	return ctx.Users.Exists(emailFilter(email))
-}

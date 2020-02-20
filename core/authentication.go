@@ -2,9 +2,9 @@ package core
 
 import (
 	"errors"
-	"strings"
-
 	"golang.org/x/crypto/bcrypt"
+	"log"
+	"strings"
 )
 
 // password hashing cost
@@ -12,6 +12,7 @@ const cost int = 11
 
 // Login will attempt to authenticate a user
 func Login(username, password string) (string, error) {
+	log.Printf("Logging in %s\r\n", username)
 	//ip := authReq.App.IP
 	//location := authReq.App.Location
 
@@ -23,7 +24,7 @@ func Login(username, password string) (string, error) {
 		return "", errors.New("authentication failed")
 	}
 
-	userRec, err := getUser(username)
+	userRec, err := authStore.Users.FindFirst(byEmail(username))
 
 	if err != nil {
 		return "", err
@@ -38,13 +39,13 @@ func Login(username, password string) (string, error) {
 	compare := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	passed := compare == nil
 	user.AddTrace(getLoginTrace(passed))
-	err = ctx.Users.Update(userRec)
+	err = authStore.Users.Update(userRec)
 
 	if err != nil {
 		return "", err
 	}
 
-	err = ctx.Users.Save()
+	err = authStore.Users.Save()
 
 	if err != nil {
 		return "", err

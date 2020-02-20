@@ -23,7 +23,7 @@ func Register(r Registration) (husk.Recorder, error) {
 		return nil, errors.New("client id can not be empty")
 	}
 
-	if emailExists(r.Email) {
+	if authStore.Users.Exists(byEmail(r.Email)) {
 		return nil, errors.New("email already in use")
 	}
 
@@ -39,8 +39,8 @@ func Register(r Registration) (husk.Recorder, error) {
 	//Expand registration to add Permissions for API also. Won't always be a 'User'
 	//user.AddRole(r.App.Name, roletype.User)
 
-	rec := ctx.Users.Create(user)
-	defer ctx.Users.Save()
+	rec := authStore.Users.Create(user)
+	defer authStore.Users.Save()
 
 	if rec.Error != nil {
 		return nil, rec.Error

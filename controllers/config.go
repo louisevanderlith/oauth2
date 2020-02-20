@@ -31,12 +31,12 @@ func OpenIDConfig(c *gin.Context) {
 	issuer := fmt.Sprintf("https://oauth2.%s", _host)
 	var responseTypes []string
 	for _, v := range _server.Config.AllowedResponseTypes {
-		responseTypes = append(responseTypes, v.String())
+		responseTypes = append(responseTypes, string(v))
 	}
 
 	var grantTypes []string
 	for _, v := range _server.Config.AllowedGrantTypes {
-		grantTypes = append(grantTypes, v.String())
+		grantTypes = append(grantTypes, string(v))
 	}
 
 	result := openConfig{
@@ -44,11 +44,11 @@ func OpenIDConfig(c *gin.Context) {
 		AuthorizationEndpoint:  fmt.Sprintf("%s/authorize", issuer),
 		TokenEndpoint:          fmt.Sprintf("%s/token", issuer),
 		UserInfoEndpoint:       fmt.Sprintf("%s/info", issuer),
-		JwkURI:                 fmt.Sprintf("%s/jwks", issuer),
+		JwkURI:                 fmt.Sprintf("%s/keys", issuer),
 		ScopesSupported:        _scopes,
 		ResponseTypesSupported: responseTypes,
 		GrantTypesSupported:    grantTypes,
-		SubjectTypesSupported:  []string{"public"},
+		SubjectTypesSupported:  []string{"public", "private"},
 		SigningAlgsSupported:   []string{"HS512"},
 		EncryptionAlgsSupported: []string{
 			"RSA1_5",
@@ -64,7 +64,7 @@ func OpenIDConfig(c *gin.Context) {
 		},
 		ClaimsParamSupported:     false,
 		RequestParamSupported:    false,
-		RequestUriParamSupported: false,
+		RequestUriParamSupported: true,
 	}
 	c.JSON(http.StatusOK, result)
 }

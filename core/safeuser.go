@@ -31,7 +31,7 @@ func createSafeUser(user husk.Recorder) SafeUser {
 
 func GetUsers(page, size int) ([]SafeUser, error) {
 	var result []SafeUser
-	users, err := ctx.Users.Find(page, size, husk.Everything())
+	users, err := authStore.Users.Find(page, size, husk.Everything())
 
 	if err != nil {
 		return result, err

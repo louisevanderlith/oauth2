@@ -1,101 +1,72 @@
 package controllers
 
 import (
-	"crypto/x509"
+	"fmt"
 	"github.com/louisevanderlith/oauth2/core"
 	"github.com/louisevanderlith/oauth2/signing"
-	"log"
-	"net/http"
-
-	"github.com/dgrijalva/jwt-go"
-	"github.com/go-session/session"
-	"gopkg.in/oauth2.v3/errors"
-	"gopkg.in/oauth2.v3/generates"
-	"gopkg.in/oauth2.v3/manage"
+	"github.com/ory/fosite"
+	"github.com/ory/fosite/compose"
+	"github.com/ory/fosite/handler/openid"
+	"github.com/ory/fosite/token/jwt"
 	"gopkg.in/oauth2.v3/server"
-	"gopkg.in/oauth2.v3/store"
+	"time"
 )
 
 var (
 	_server *server.Server
-	_host string
+	_host   string
 	_scopes []string
+
+	authProvider fosite.OAuth2Provider
+	strat compose.CommonStrategy
 )
 
-func InitOAuthServer(certPath string, host string) {
-	_host = host
-	manager := manage.NewDefaultManager()
-	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-	manager.SetClientTokenCfg(manage.DefaultClientTokenCfg)
-
-	// token store
-	manager.MustTokenStorage(store.NewMemoryTokenStore())
-
+func InitProvider(certPath, host string) {
+	_host= host
 	err := signing.Initialize(certPath)
 
 	if err != nil {
 		panic(err)
 	}
 
-	// generate jwt access token
-	manager.MapAccessGenerate(generates.NewJWTAccessGenerate(x509.MarshalPKCS1PrivateKey(signing.PrivateKey), jwt.SigningMethodHS512))
-	manager.MapClientStorage(core.NewClientStore())
+	cfg := &compose.Config{}
+	store := core.CreateContext()
 
-	_server = server.NewServer(server.NewConfig(), manager)
-	_server.SetAllowGetAccessRequest(true)
-	_server.SetClientInfoHandler(server.ClientFormHandler)
-	_server.SetPasswordAuthorizationHandler(core.Login)
-	_server.SetUserAuthorizationHandler(userAuthorizeHandler)
-
-	_server.SetInternalErrorHandler(func(err error) (re *errors.Response) {
-		log.Println("Internal Error:", err.Error())
-		return
-	})
-
-	_server.SetResponseErrorHandler(func(re *errors.Response) {
-		log.Println("Response Error:", re.Error.Error())
-	})
-
-	_scopes = []string{
-		"openid",
-		"offline_access",
-		"profile",
-		"artifact",
-		"comms",
-		"comment",
-		"blog",
-		"theme",
-		"vin",
+	strat = compose.CommonStrategy{
+		CoreStrategy:               nil,
+		OpenIDConnectTokenStrategy: compose.NewOpenIDConnectStrategy(cfg, signing.PrivateKey),
+		JWTStrategy:                compose.NewOAuth2JWTStrategy(signing.PrivateKey, compose.NewOAuth2HMACStrategy(cfg, []byte(""), nil)),
 	}
+	authProvider = compose.Compose(cfg, store, strat, nil,
+		compose.OAuth2AuthorizeExplicitFactory,
+		compose.OAuth2AuthorizeImplicitFactory,
+		compose.OAuth2ClientCredentialsGrantFactory,
+		compose.OAuth2RefreshTokenGrantFactory,
+		compose.OAuth2ResourceOwnerPasswordCredentialsFactory,
+
+		compose.OAuth2TokenRevocationFactory,
+		compose.OAuth2TokenIntrospectionFactory,
+
+		// be aware that open id connect factories need to be added after oauth2 factories to work properly.
+		compose.OpenIDConnectExplicitFactory,
+		compose.OpenIDConnectImplicitFactory,
+		compose.OpenIDConnectHybridFactory,
+		compose.OpenIDConnectRefreshFactory, )
 }
 
-func userAuthorizeHandler(w http.ResponseWriter, r *http.Request) (string, error) {
-	store, err := session.Start(nil, w, r)
-	if err != nil {
-		return "", err
+func newSession(userKey string, audience []string) *openid.DefaultSession {
+	return &openid.DefaultSession{
+		Claims: &jwt.IDTokenClaims{
+			Issuer:      fmt.Sprintf("https://oauth2.%s", _host),
+			Subject:     userKey,
+			Audience:    audience,
+			ExpiresAt:   time.Now().Add(time.Hour * 6),
+			IssuedAt:    time.Now(),
+			RequestedAt: time.Now(),
+			AuthTime:    time.Now(),
+		},
+		Headers: &jwt.Headers{
+			Extra: make(map[string]interface{}),
+		},
 	}
-
-	uid, ok := store.Get("LoggedInUserID")
-	if !ok {
-		if r.Form == nil {
-			r.ParseForm()
-		}
-
-		store.Set("ReturnUri", r.Form)
-		store.Save()
-
-		w.Header().Set("Location", "/login")
-		w.WriteHeader(http.StatusFound)
-		return "", nil
-	}
-
-	userID := uid.(string)
-	store.Delete("LoggedInUserID")
-	err = store.Save()
-
-	if err != nil {
-		return "", err
-	}
-
-	return userID, nil
 }

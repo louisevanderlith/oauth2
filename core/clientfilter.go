@@ -2,7 +2,6 @@ package core
 
 import (
 	"github.com/louisevanderlith/husk"
-	"log"
 )
 
 type clientFilter func(obj Client) bool
@@ -12,10 +11,8 @@ func (f clientFilter) Filter(obj husk.Dataer) bool {
 }
 
 //byID filter will filter by client_id
-func byID(id string) clientFilter {
+func byClientID(id string) clientFilter {
 	return func(obj Client) bool {
-		log.Println(id)
-		log.Printf("%+v\r\n", obj)
 		return obj.ID == id
 	}
 }
