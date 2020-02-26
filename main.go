@@ -28,7 +28,7 @@ func main() {
 	defer core.Shutdown()
 
 	certPath := "/signcerts/"
-	controllers.InitOAuthServer(certPath, host)
+	controllers.InitProvider(certPath, host)
 
 	droxo.AssignOperator(prof, host)
 	//Download latest Theme

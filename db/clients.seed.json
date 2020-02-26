@@ -2,6 +2,12 @@
   {
     "ID": "www",
     "Secret": "wwwsecret",
-    "Domain": "http://localhost:8091"
+    "Domain": "http://localhost:8091",
+    "RedirectURIs": ["http://localhost:8091/oauth2"],
+    "GrantTypes": ["implicit", "refresh_token", "authorization_code", "password", "client_credentials"],
+    "ResponseTypes": ["id_token", "code", "token"],
+    "Scopes": ["openid", "offline","comment", "comms"],
+    "Public": true,
+    "Audience": ["comms", "comment"]
   }
 ]

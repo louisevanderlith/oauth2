@@ -35,7 +35,7 @@ func OpenIDConfig(c *gin.Context) {
 	}
 
 	var grantTypes []string
-	for _, v := range _server.Config.AllowedGrantTypes {
+	for _, v := range authProvider..AllowedGrantTypes {
 		grantTypes = append(grantTypes, string(v))
 	}
 

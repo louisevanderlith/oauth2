@@ -4,9 +4,7 @@ go 1.13
 
 require (
 	github.com/asaskevich/govalidator v0.0.0-20200108200545-475eaeb16496 // indirect
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.5.0
-	github.com/go-oauth2/oauth2 v3.9.2+incompatible // indirect
 	github.com/go-session/session v3.1.2+incompatible
 	github.com/golang/protobuf v1.3.3 // indirect
 	github.com/google/uuid v1.1.1 // indirect

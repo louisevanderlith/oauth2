@@ -6,6 +6,11 @@
             <p class="subtitle has-text-grey">The client would like to perform actions on your behalf.</p>
             <div class="box">
                 <form action="/authorize" method="POST" role="form">
+                    <ul>
+                        {{range $_, $scp := . }}
+                            <li><input type="checkbox" name="scopes" value="{{$scp}}">{{$scp}}</li>
+                        {{end}}
+                    </ul>
                     <button type="submit" class="button is-block is-success is-large is-fullwidth">Allow</button>
                 </form>
             </div>
