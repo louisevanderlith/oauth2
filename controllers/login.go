@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-session/session"
 	"github.com/louisevanderlith/droxo"
+	"github.com/louisevanderlith/oauth2/core"
 	"net/http"
 )
 
@@ -28,8 +29,16 @@ func LoginPost(c *gin.Context) {
 		}
 	}
 
-	store.Set("LoggedInUserID", r.Form.Get("username"))
+	k, err := core.Login(r.Form.Get("username"), r.Form.Get("password"))
+
+	if err != nil {
+		c.AbortWithError(http.StatusUnauthorized, err)
+		return
+	}
+
+	store.Set("LoggedInUserID", k)
 	store.Save()
 
-	c.Redirect(http.StatusFound, "/auth")
+	c.Header("Location", "/consent")
+	c.Writer.WriteHeader(http.StatusFound)
 }

@@ -48,10 +48,11 @@ func main() {
 
 	r.HTMLRender = tmpl
 
-	r.GET("/auth", controllers.Auth)
+	r.GET("/authorize", controllers.Authorize)
 	r.POST("/authorize", controllers.Authorize)
 	r.GET("/login", controllers.Login)
 	r.POST("/login", controllers.LoginPost)
+	r.GET("/consent", controllers.Consent)
 	r.POST("/token", controllers.Token)
 	r.GET("/clients", controllers.Clients)
 	r.POST("/info", controllers.Info	)

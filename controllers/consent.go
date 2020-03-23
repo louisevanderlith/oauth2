@@ -7,17 +7,20 @@ import (
 	"net/http"
 )
 
-func Auth(c *gin.Context) {
+func Consent(c *gin.Context) {
 	store, err := session.Start(nil, c.Writer, c.Request)
 
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 	}
 
-	if _, ok := store.Get("LoggedInUserID"); !ok {
-		c.Redirect(http.StatusFound, "/login")
+	userId, ok := store.Get("LoggedInUserID")
+
+	if  !ok {
+		c.Header("Location", "/login")
+		c.Writer.WriteHeader(http.StatusFound)
 		return
 	}
 
-	c.HTML(http.StatusOK, "auth.html", droxo.Wrap("Auth", nil))
+	c.HTML(http.StatusOK, "consent.html", droxo.Wrap("Consent", userId))
 }
