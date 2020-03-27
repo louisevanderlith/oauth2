@@ -7,7 +7,7 @@ import (
 )
 
 type Registration struct {
-	ClientID            string
+	ClientID       string
 	Name           string
 	Email          string
 	Password       string

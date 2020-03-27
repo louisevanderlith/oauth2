@@ -8,21 +8,15 @@ import (
 
 // Introspection endpoint
 func Info(c *gin.Context) {
-	err := c.Request.ParseForm()
+	accCode, ok := c.GetPostForm("access_code")
 
-	if err != nil {
-		c.AbortWithError(http.StatusBadRequest, err)
+	if !ok {
+		log.Println("no access_code")
+		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
-	accesstoke := c.PostForm("token")
-
-	if len(accesstoke) == 0 {
-		c.AbortWithStatus(http.StatusUnauthorized)
-		return
-	}
-
-	info, err := _server.Manager.LoadAccessToken(accesstoke)
+	info, err := _server.Manager.LoadAccessToken(accCode)
 
 	if err != nil {
 		log.Println(err)

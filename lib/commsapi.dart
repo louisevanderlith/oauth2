@@ -17,7 +17,8 @@ Future<HttpRequest> sendResetRequest(
   return _sendCommsMessage(data);
 }
 
-Future<HttpRequest> sendRegistration(String verifyLink, String username, String email) async {
+Future<HttpRequest> sendRegistration(
+    String verifyLink, String username, String email) async {
   final data = jsonEncode({
     "Body": verifyLink,
     "Name": username,
@@ -31,7 +32,7 @@ Future<HttpRequest> sendRegistration(String verifyLink, String username, String 
 
 Future<HttpRequest> _sendCommsMessage(Object data) async {
   var url = await buildPath("Comms.API", "message", new List<String>());
-  
+
   final compltr = new Completer<HttpRequest>();
   final request = HttpRequest();
   request.open("POST", url);

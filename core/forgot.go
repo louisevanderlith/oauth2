@@ -10,8 +10,8 @@ import (
 
 //Forgot is used to keep a list of Users which have requested to Change their passwords.
 type Forgot struct {
-	UserKey  husk.Key
-	Redeemed bool
+	UserKey    husk.Key
+	Redeemed   bool
 	RedeemedAt time.Time
 }
 

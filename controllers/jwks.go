@@ -8,22 +8,22 @@ import (
 )
 
 type jwk struct {
-	Kty string `json:"kty"`
-	Use string `json:"use"`
-	Alg string `json"alg"`
-	Kid string `json:"kid"`
+	Kty     string   `json:"kty"`
+	Use     string   `json:"use"`
+	Alg     string   `json"alg"`
+	Kid     string   `json:"kid"`
 	PublicN *big.Int `json:"n"`
-	PublicE int `json:"e"`
+	PublicE int      `json:"e"`
 }
 
 func GetJWKs(c *gin.Context) {
 	var keys []jwk
 
 	pubsig := jwk{
-		Kty: "RSA",
-		Kid: "default",
-		Use: "sig",
-		Alg: "RS256",
+		Kty:     "RSA",
+		Kid:     "default",
+		Use:     "sig",
+		Alg:     "RS256",
 		PublicN: signing.PrivateKey.N,
 		PublicE: signing.PrivateKey.E,
 	}

@@ -19,7 +19,11 @@ Future<App> getApp() async {
 void identifyLocation() {
   if (window.navigator != null) {
     final geo = window.navigator.geolocation;
-    geo.getCurrentPosition(maximumAge: new Duration(hours: 8), timeout: new Duration(seconds: 10)).then(storeLocation, onError: locationFailed);
+    geo
+        .getCurrentPosition(
+            maximumAge: new Duration(hours: 8),
+            timeout: new Duration(seconds: 10))
+        .then(storeLocation, onError: locationFailed);
   }
 }
 
@@ -30,10 +34,10 @@ Future<String> getIP() async {
 }
 
 void storeLocation(position) {
- window.localStorage['location'] =
-          '${position.coords.latitude}, ${position.coords.longitude}';
+  window.localStorage['location'] =
+      '${position.coords.latitude}, ${position.coords.longitude}';
 }
 
-void locationFailed(err){
+void locationFailed(err) {
   print('Position Error: ${err.error} ${err.code}');
 }

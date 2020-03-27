@@ -52,7 +52,8 @@ class RegisterForm extends FormState {
   }
 
   Future submitSend() async {
-    var data = new Register(await getApp(), name, email, password, confirmPassword);
+    var data =
+        new Register(await getApp(), name, email, password, confirmPassword);
     var result = await sendRegister(data);
 
     var obj = jsonDecode(result.response);

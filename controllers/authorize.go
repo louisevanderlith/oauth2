@@ -11,8 +11,8 @@ import (
 func Authorize(c *gin.Context) {
 	store, err := session.Start(nil, c.Writer, c.Request)
 	if err != nil {
-		log.Println(err)
-		c.AbortWithError(http.StatusInternalServerError, err)
+		log.Println("no session store", err)
+		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
 

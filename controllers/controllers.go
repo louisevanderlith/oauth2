@@ -18,7 +18,7 @@ import (
 
 var (
 	_server *server.Server
-	_host string
+	_host   string
 	_scopes []string
 )
 

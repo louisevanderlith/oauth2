@@ -1,5 +1,5 @@
 import 'package:OAUTH2.APP/forgotform.dart';
 
-void main(){
+void main() {
   new ForgotForm("#frmForgot", "#txtIdentity", "#btnSubmit");
 }

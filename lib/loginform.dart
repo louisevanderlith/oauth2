@@ -46,7 +46,7 @@ class LoginForm extends FormState {
       }
     }
   }
-  
+
   void afterSend(String sessionID) {
     var finalURL = window.localStorage['return'];
     finalURL += "?access_token=" + sessionID;

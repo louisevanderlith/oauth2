@@ -54,10 +54,20 @@ func main() {
 	r.POST("/login", controllers.LoginPost)
 	r.GET("/consent", controllers.Consent)
 	r.POST("/token", controllers.Token)
-	r.GET("/clients", controllers.Clients)
-	r.POST("/info", controllers.Info	)
 	r.GET("/.well-known/openid-configuration", controllers.OpenIDConfig)
 	r.GET("/jwks", controllers.GetJWKs)
+
+	clntGrp := r.Group("/")
+	accts, err := core.GetClientAccounts()
+
+	if err != nil {
+		panic(err)
+	}
+	clntGrp.Use(gin.BasicAuth(accts))
+
+	clntGrp.GET("clients", controllers.Clients)
+	clntGrp.POST("info", controllers.Info)
+
 	err = r.Run(":8086")
 
 	if err != nil {

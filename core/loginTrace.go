@@ -33,7 +33,7 @@ func getLoginTrace(passed bool) LoginTrace {
 	}
 
 	return LoginTrace{
-		Allowed:   passed,
+		Allowed: passed,
 		//ClientID:  r.ClientID,
 		TraceType: trace,
 	}
