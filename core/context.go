@@ -6,8 +6,9 @@ import (
 )
 
 type context struct {
-	Clients   husk.Tabler
-	Users     husk.Tabler
+	Profiles husk.Tabler
+	Scopes husk.Tabler
+	Users husk.Tabler
 	Forgotten husk.Tabler
 }
 
@@ -15,8 +16,9 @@ var ctx context
 
 func CreateContext() {
 	ctx = context{
-		Clients:   husk.NewTable(Client{}, serials.GobSerial{}),
-		Users:     husk.NewTable(User{}, serials.GobSerial{}),
+		Profiles: husk.NewTable(Profile{}, serials.GobSerial{}),
+		Scopes: husk.NewTable(Scope{}, serials.GobSerial{}),
+		Users: husk.NewTable(User{}, serials.GobSerial{}),
 		Forgotten: husk.NewTable(Forgot{}, serials.GobSerial{}),
 	}
 
@@ -24,8 +26,9 @@ func CreateContext() {
 }
 
 func Shutdown() {
+	ctx.Profiles.Save()
 	ctx.Users.Save()
-	ctx.Clients.Save()
+	ctx.Forgotten.Save()
 }
 
 func seed() {
@@ -35,13 +38,33 @@ func seed() {
 		panic(err)
 	}
 
-	ctx.Users.Save()
-
-	err = ctx.Clients.Seed("db/clients.seed.json")
+	err = ctx.Users.Save()
 
 	if err != nil {
 		panic(err)
 	}
 
-	ctx.Clients.Save()
+	err = ctx.Profiles.Seed("db/profiles.seed.json")
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = ctx.Profiles.Save()
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = ctx.Scopes.Seed("db/scopes.seed.json")
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = ctx.Scopes.Save()
+
+	if err != nil {
+		panic(err)
+	}
 }

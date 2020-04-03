@@ -1,10 +1,11 @@
 package core
 
 type Client struct {
-	ID     string `hsk:"size(50)"`
+	Name     string `hsk:"size(50)"`
 	Secret string
 	Domain string `hsk:"size(100)"`
-	UserID string `hsk:"null"`
+	Public bool //Public must sign in using Login-Page
+	AllowedScopes []string
 }
 
 func (c Client) Valid() (bool, error) {
@@ -13,7 +14,7 @@ func (c Client) Valid() (bool, error) {
 
 // GetID client id
 func (c Client) GetID() string {
-	return c.ID
+	return c.Name
 }
 
 // GetSecret client domain
@@ -28,5 +29,5 @@ func (c Client) GetDomain() string {
 
 // GetUserID user id
 func (c Client) GetUserID() string {
-	return c.UserID
+	return "No USER"
 }

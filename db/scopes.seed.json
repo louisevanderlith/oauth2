@@ -1,0 +1,340 @@
+[
+  {
+    "Name": "artifact.uploads.view",
+    "DisplayName": "View artifact Upload",
+    "Secret": "secret"
+  },
+  {
+    "Name": "artifact.uploads.create",
+    "DisplayName": "Create artifact Upload",
+    "Secret": "secret"
+  },
+  {
+    "Name": "artifact.uploads.update",
+    "DisplayName": "Update artifact Upload",
+    "Secret": "secret"
+  },
+  {
+    "Name": "artifact.uploads.delete",
+    "DisplayName": "Delete artifact Upload",
+    "Secret": "secret"
+  },
+  {
+    "Name": "artifact.uploads.search",
+    "DisplayName": "Search artifact Uploads",
+    "Secret": "secret"
+  },
+  {
+    "Name": "artifact.download",
+    "DisplayName": "Downloads artifact",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "blog.articles.view",
+    "DisplayName": "View blog Article",
+    "Secret": "secret",
+    "Claims": [
+      "username"
+    ]
+  },
+  {
+    "Name": "blog.articles.create",
+    "DisplayName": "Create blog Article",
+    "Secret": "secret"
+  },
+  {
+    "Name": "blog.articles.update",
+    "DisplayName": "Update blog Article",
+    "Secret": "secret"
+  },
+  {
+    "Name": "blog.articles.delete",
+    "DisplayName": "Delete blog Article",
+    "Secret": "secret"
+  },
+  {
+    "Name": "blog.articles.search",
+    "DisplayName": "Search blog Articles",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "comment.messages.view",
+    "DisplayName": "View comment Message",
+    "Secret": "secret"
+  },
+  {
+    "Name": "comment.messages.create",
+    "DisplayName": "Create comment Message",
+    "Secret": "secret"
+  },
+  {
+    "Name": "comment.messages.update",
+    "DisplayName": "Update comment Message",
+    "Secret": "secret"
+  },
+  {
+    "Name": "comment.messages.delete",
+    "DisplayName": "Delete comment Message",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "comms.messages.view",
+    "DisplayName": "View communication Message",
+    "Secret": "secret"
+  },
+  {
+    "Name": "comms.messages.create",
+    "DisplayName": "Create communication Message",
+    "Secret": "secret"
+  },
+  {
+    "Name": "comms.messages.search",
+    "DisplayName": "Search communication Messages",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "funds.accounts.view",
+    "DisplayName": "View funds Account",
+    "Secret": "secret"
+  },
+  {
+    "Name": "funds.credits.view",
+    "DisplayName": "View funds Credits",
+    "Secret": "secret"
+  },
+  {
+    "Name": "funds.requisition.create",
+    "DisplayName": "Creates funding Requisition",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "game.heroes.view",
+    "DisplayName": "View game Hero",
+    "Secret": "secret"
+  },
+  {
+    "Name": "game.heroes.create",
+    "DisplayName": "Create game Hero",
+    "Secret": "secret"
+  },
+  {
+    "Name": "game.heroes.update",
+    "DisplayName": "Update game Hero",
+    "Secret": "secret"
+  },
+  {
+    "Name": "game.heroes.delete",
+    "DisplayName": "Delete game Hero",
+    "Secret": "secret"
+  },
+  {
+    "Name": "game.levels.view",
+    "DisplayName": "View game Level",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "logbook.history.view",
+    "DisplayName": "View logbook History",
+    "Secret": "secret"
+  },
+  {
+    "Name": "logbook.history.create",
+    "DisplayName": "Create logbook History",
+    "Secret": "secret"
+  },
+  {
+    "Name": "logbook.history.search",
+    "DisplayName": "Search logbook History",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "notify.publish",
+    "DisplayName": "Publish notifications",
+    "Secret": "secret"
+  },
+  {
+    "Name": "notify.messages.search",
+    "DisplayName": "Search notification Message",
+    "Secret": "secret"
+  },
+  {
+    "Name": "notify.messages.view",
+    "DisplayName": "View notification Messages",
+    "Secret": "secret"
+  },
+  {
+    "Name": "notify.subscribe",
+    "DisplayName": "Subscribe for notifications",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "stock.cars.view",
+    "DisplayName": "View stock Car",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.cars.create",
+    "DisplayName": "Create stock Car",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.cars.update",
+    "DisplayName": "Update stock Car",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.cars.search",
+    "DisplayName": "Search stock Cars",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "stock.parts.view",
+    "DisplayName": "View stock Part",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.parts.create",
+    "DisplayName": "Create stock Part",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.parts.update",
+    "DisplayName": "Update stock Part",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.parts.search",
+    "DisplayName": "Search stock Parts",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "stock.properties.view",
+    "DisplayName": "View stock Property",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.properties.create",
+    "DisplayName": "Create stock Property",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.properties.update",
+    "DisplayName": "Update stock Property",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.properties.search",
+    "DisplayName": "Search stock Properties",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "stock.services.view",
+    "DisplayName": "View stock Service",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.services.create",
+    "DisplayName": "Create stock Service",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.services.update",
+    "DisplayName": "Update stock Service",
+    "Secret": "secret"
+  },
+  {
+    "Name": "stock.services.search",
+    "DisplayName": "Search stock Service",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "theme.assets.download",
+    "DisplayName": "Download theme Asset",
+    "Secret": "secret"
+  },
+  {
+    "Name": "theme.assets.view",
+    "DisplayName": "View theme Assets",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "stock.services.view",
+    "DisplayName": "View stock Service",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vehicle.create",
+    "DisplayName": "Create Vehicle",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vehicle.update",
+    "DisplayName": "Update Vehicle",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vehicle.search",
+    "DisplayName": "Search Vehicles",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "vin.lookup",
+    "DisplayName": "VIN Lookup",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vin.validate",
+    "DisplayName": "VIN Validation",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vin.region.view",
+    "DisplayName": "View vin Region",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vin.region.create",
+    "DisplayName": "Create vin Region",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vin.region.update",
+    "DisplayName": "Update vin Region",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vin.region.search",
+    "DisplayName": "Search vin Regions",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vin.admin.view",
+    "DisplayName": "View vin Region",
+    "Secret": "secret"
+  },
+  {
+    "Name": "vin.admin.search",
+    "DisplayName": "Search vin Regions",
+    "Secret": "secret"
+  },
+
+  {
+    "Name": "xchange.currency",
+    "DisplayName": "Exchange your currency for Tokens",
+    "Secret": "secret"
+  }
+]

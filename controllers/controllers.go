@@ -18,12 +18,9 @@ import (
 
 var (
 	_server *server.Server
-	_host   string
-	_scopes []string
 )
 
-func InitOAuthServer(certPath string, host string) {
-	_host = host
+func InitOAuthServer(certPath string) {
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
 	manager.SetClientTokenCfg(manage.DefaultClientTokenCfg)
@@ -55,18 +52,6 @@ func InitOAuthServer(certPath string, host string) {
 	_server.SetResponseErrorHandler(func(re *errors.Response) {
 		log.Println("Response Error:", re.Error.Error())
 	})
-
-	_scopes = []string{
-		"openid",
-		"offline_access",
-		"profile",
-		"artifact",
-		"comms:admin",
-		"comment:admin",
-		"blog",
-		"theme",
-		"vin",
-	}
 }
 
 func userAuthorizeHandler(w http.ResponseWriter, r *http.Request) (string, error) {

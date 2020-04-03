@@ -24,5 +24,9 @@ func Consent(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "consent.html", droxo.Wrap("Consent", userId))
+	c.HTML(http.StatusOK, "consent.html", droxo.Wrap("Consent", droxo.Service{
+		Profile: "Security",
+		APIKeys: nil,
+		LogoKey: "0`0",
+	}, userId))
 }

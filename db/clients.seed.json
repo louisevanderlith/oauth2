@@ -1,7 +1,0 @@
-[
-  {
-    "ID": "www",
-    "Secret": "wwwsecret",
-    "Domain": "http://localhost:8091"
-  }
-]

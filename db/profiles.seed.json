@@ -1,0 +1,63 @@
+[
+  {
+    "Title": "mango",
+    "Description": "demo profile",
+    "ContactEmail": "info@mango.avo",
+    "ContactPhone": "0851234561",
+    "Clients": [
+      {
+        "Name": "mango.www",
+        "Secret": "wwwsecret",
+        "Domain": "http://localhost:8091",
+        "Public": true,
+        "AllowedScopes": [
+          "comms.messages.create",
+          "blog.articles.view",
+          "blog.articles.search",
+          "comment.messages.search",
+          "theme.assets.search",
+          "theme.assets.view",
+          "artifact.download"
+        ]
+      },
+      {
+        "Name": "mango.admin",
+        "Secret": "adminsecret",
+        "Domain": "http://localhost:8088",
+        "Public": true,
+        "AllowedScopes": [
+          "theme.assets.search",
+          "theme.assets.view",
+          "artifact.upload.search",
+          "artifact.upload.view",
+          "comms.messages.search",
+          "comms.messages.view",
+          "artifact.download"
+        ]
+      },
+      {
+        "Name": "mango.cars",
+        "Secret": "carssecret",
+        "Domain": "http://localhost:8081",
+        "Public": true,
+        "AllowedScopes": [
+          "theme.assets.search",
+          "theme.assets.view",
+          "artifact.upload.search",
+          "artifact.upload.view",
+          "artifact.upload.create",
+          "artifact.download"
+        ]
+      },
+      {
+        "Name": "mango.curl",
+        "Secret": "curlsecret",
+        "Public": false,
+        "AllowedScopes": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {}
+]

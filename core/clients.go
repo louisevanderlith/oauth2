@@ -1,9 +1,11 @@
 package core
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/louisevanderlith/husk"
 	"gopkg.in/oauth2.v3"
+	"strings"
 )
 
 type Clients struct{}
@@ -12,56 +14,87 @@ func NewClientStore() oauth2.ClientStore {
 	return &Clients{}
 }
 
-func GetAllClients() (husk.Collection, error) {
-	return ctx.Clients.Find(1, 10, husk.Everything())
+func GetAllProfiles() (husk.Collection, error) {
+	return ctx.Profiles.Find(1, 20, husk.Everything())
 }
 
 func GetClientAccounts() (gin.Accounts, error) {
-	clnts, err := GetAllClients()
+	profls, err := GetAllProfiles()
 
 	if err != nil {
 		return nil, err
 	}
 
 	result := make(gin.Accounts)
-
-	rtor := clnts.GetEnumerator()
+	rtor := profls.GetEnumerator()
 	for rtor.MoveNext() {
-		dta := rtor.Current().Data().(Client)
-		result[dta.ID] = dta.Secret
+		dta := rtor.Current().Data().(Profile)
+		prefx := strings.ToLower(dta.Title)
+		for _, v := range dta.Clients {
+			result[prefx + v.Name] = v.Secret
+		}
 	}
 
 	return result, nil
 }
 
 func (cs *Clients) GetByID(id string) (oauth2.ClientInfo, error) {
-	rec, err := ctx.Clients.FindFirst(byID(id))
+	parts := strings.Split(id, ".")
+
+	if len(parts) != 2 {
+		return nil, errors.New("id doesn't have seperator")
+	}
+
+	rec, err := ctx.Profiles.FindFirst(byTitleID(parts[0]))
 
 	if err != nil {
 		return nil, err
 	}
 
-	return rec.Data().(Client), nil
+	prof := rec.Data().(Profile)
+
+	for _, v := range prof.Clients {
+		if v.Name == parts[1] {
+			return v, nil
+		}
+	}
+
+	return nil, errors.New("invalid client id")
 }
 
 func (cs *Clients) Set(id string, cli oauth2.ClientInfo) error {
-	rec, err := ctx.Clients.FindFirst(byID(id))
+	parts := strings.Split(id, ".")
+
+	if len(parts) != 2 {
+		return errors.New("id doesn't have seperator")
+	}
+
+	rec, err := ctx.Profiles.FindFirst(byTitleID(parts[0]))
 
 	if err != nil {
 		return err
 	}
 
-	err = rec.Set(cli.(Client))
+	prof := rec.Data().(Profile)
+
+	for _, v := range prof.Clients {
+		if v.Name == parts[1]{
+			v = cli.(Client)
+			break
+		}
+	}
+
+	err = rec.Set(prof)
 
 	if err != nil {
 		return err
 	}
 
-	err = ctx.Clients.Update(rec)
+	err = ctx.Profiles.Update(rec)
 
 	if err != nil {
 		return err
 	}
 
-	return ctx.Clients.Save()
+	return ctx.Profiles.Save()
 }

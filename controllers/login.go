@@ -23,7 +23,11 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "login.html", droxo.Wrap("Login", nil))
+	c.HTML(http.StatusOK, "login.html", droxo.Wrap("Login", droxo.Service{
+		Profile: "Security",
+		APIKeys: nil,
+		LogoKey: "0`0",
+	}, nil))
 }
 
 func LoginPost(c *gin.Context) {

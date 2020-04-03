@@ -20,7 +20,7 @@ type User struct {
 	Password    string `hsk:"min(6)"`
 	LoginDate   time.Time
 	LoginTraces []LoginTrace
-	Roles       []Role
+	Claims      Claims
 }
 
 func (u User) Valid() (bool, error) {
@@ -66,7 +66,8 @@ func (u *User) SecurePassword(plainPassword string) {
 	u.Password = string(hashedPwd)
 }
 
-func UpdateRoles(key husk.Key, roles []Role) error {
+/*
+func UpdateRoles(key husk.Key, roles []string) error {
 	obj, err := ctx.Users.FindByKey(key)
 
 	if err != nil {
@@ -74,7 +75,8 @@ func UpdateRoles(key husk.Key, roles []Role) error {
 	}
 
 	c := obj.Data().(User)
-	c.Roles = roles
+
+	c.Claims = roles
 
 	err = obj.Set(c)
 
@@ -86,7 +88,6 @@ func UpdateRoles(key husk.Key, roles []Role) error {
 	return ctx.Users.Update(obj)
 }
 
-/*
 func (u *User) AddRole(appName string, role roletype.Enum) {
 	appRole := Role{appName, role}
 	u.Roles = append(u.Roles, appRole)

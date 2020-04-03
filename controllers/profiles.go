@@ -6,8 +6,8 @@ import (
 	"net/http"
 )
 
-func Clients(c *gin.Context) {
-	result, err := core.GetAllClients()
+func Profiles(c *gin.Context) {
+	result, err := core.GetAllProfiles()
 
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
